@@ -187,22 +187,21 @@ internal class FilterViewModelImpl constructor(
                 KEY_DOWNLOAD_URL to it.url
             )
             val download =
-                OneTimeWorkRequestBuilder<DownloadWorker>()
+                OneTimeWorkRequest.Builder(DownloadWorker::class.java)
                     .setConstraints(constraints)
                     .addTag(TAG_FILTER_WORK)
                     .setInputData(inputData)
                     .build()
-            val install =
-                OneTimeWorkRequestBuilder<InstallationWorker>()
-                    .addTag(TAG_FILTER_WORK)
-                    .addTag(TAG_INSTALLATION)
-                    .setInputData(
-                        workDataOf(
-                            KEY_RAW_CHECKSUM to it.checksum,
-                            KEY_CHECK_LICENSE to true
-                        )
+            val install = OneTimeWorkRequest.Builder(InstallationWorker::class.java)
+                .addTag(TAG_FILTER_WORK)
+                .addTag(TAG_INSTALLATION)
+                .setInputData(
+                    workDataOf(
+                        KEY_RAW_CHECKSUM to it.checksum,
+                        KEY_CHECK_LICENSE to true
                     )
-                    .build()
+                )
+                .build()
             val continuation = workManager.beginUniqueWork(
                 it.id, ExistingWorkPolicy.KEEP, download
             ).then(install)

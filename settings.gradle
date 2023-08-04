@@ -2,3 +2,6 @@ include ':app'
 include ':adblock-client'
 include ':ad-filter'
 rootProject.name = "AdblockAndroid"
+gradle.rootProject {
+    ext.localRepoPath = '/home/song/.m2/repository'
+}
