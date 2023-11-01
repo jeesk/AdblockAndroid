@@ -19,6 +19,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by Edsuns@qq.com on 2021/7/29.
@@ -86,7 +87,8 @@ internal class FilterViewModelImpl constructor(
         // clear bad running download state
         filters.value?.values?.forEach {
             if (it.downloadState.isRunning) {
-                val list = workManager.getWorkInfosForUniqueWork(it.id).get()
+                val list =
+                    workManager.getWorkInfosForUniqueWork(it.id).get(100, TimeUnit.MILLISECONDS)
                 if (list == null || list.isEmpty()) {
                     it.downloadState = DownloadState.FAILED
                     flushFilter()
