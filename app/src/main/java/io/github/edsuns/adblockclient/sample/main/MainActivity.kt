@@ -8,9 +8,9 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
-import android.webkit.URLUtil
-import android.webkit.WebSettings
-import android.webkit.WebView
+import chromium.webkit.URLUtil
+import chromium.webkit.WebSettings
+import chromium.webkit.WebView
 import android.widget.PopupMenu
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity

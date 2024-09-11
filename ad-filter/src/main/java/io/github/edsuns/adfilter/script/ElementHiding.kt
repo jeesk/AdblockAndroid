@@ -1,7 +1,7 @@
 package io.github.edsuns.adfilter.script
 
-import android.webkit.JavascriptInterface
-import android.webkit.WebView
+import chromium.webkit.JavascriptInterface
+import chromium.webkit.WebView
 import com.anthonycr.mezzanine.FileStream
 import com.anthonycr.mezzanine.MezzanineGenerator
 import io.github.edsuns.adfilter.impl.Detector

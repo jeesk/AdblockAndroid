@@ -1,7 +1,7 @@
 package io.github.edsuns.adblockclient.sample
 
 import android.util.Patterns
-import android.webkit.URLUtil
+import chromium.webkit.URLUtil
 
 /**
  * Created by Edsuns@qq.com on 2021/1/3.

@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.webkit.URLUtil
+import chromium.webkit.URLUtil
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Toast

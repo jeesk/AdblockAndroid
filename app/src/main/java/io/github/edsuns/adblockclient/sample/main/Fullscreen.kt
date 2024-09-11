@@ -7,7 +7,7 @@ import android.graphics.Color
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.webkit.WebChromeClient.CustomViewCallback
+import chromium.webkit.WebChromeClient.CustomViewCallback
 import java.lang.ref.WeakReference
 
 

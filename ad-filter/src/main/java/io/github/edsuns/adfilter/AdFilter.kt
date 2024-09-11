@@ -1,9 +1,9 @@
 package io.github.edsuns.adfilter
 
 import android.content.Context
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import chromium.webkit.WebResourceRequest
+import chromium.webkit.WebView
+import chromium.webkit.WebViewClient
 import io.github.edsuns.adblockclient.ResourceType
 import io.github.edsuns.adfilter.impl.AdFilterImpl
 

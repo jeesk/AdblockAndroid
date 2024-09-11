@@ -1,7 +1,7 @@
 package io.github.edsuns.adblockclient.sample.main
 
 import android.graphics.Bitmap
-import android.webkit.*
+import chromium.webkit.*
 import io.github.edsuns.adfilter.AdFilter
 
 /**

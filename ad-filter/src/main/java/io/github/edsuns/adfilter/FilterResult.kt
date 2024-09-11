@@ -1,6 +1,6 @@
 package io.github.edsuns.adfilter
 
-import android.webkit.WebResourceResponse
+import chromium.webkit.WebResourceResponse
 
 /**
  * Created by Edsuns@qq.com on 2021/1/24.

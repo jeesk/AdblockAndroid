@@ -2,8 +2,8 @@ package io.github.edsuns.adblockclient.sample.main
 
 import android.graphics.Bitmap
 import android.view.View
-import android.webkit.WebChromeClient
-import android.webkit.WebView
+import chromium.webkit.WebChromeClient
+import chromium.webkit.WebView
 
 /**
  * Created by Edsuns@qq.com on 2021/1/2.

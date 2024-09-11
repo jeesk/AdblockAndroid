@@ -2,9 +2,9 @@ package io.github.edsuns.adfilter.impl
 
 import android.content.Context
 import android.net.Uri
-import android.webkit.WebResourceRequest
-import android.webkit.WebResourceResponse
-import android.webkit.WebView
+import chromium.webkit.WebResourceRequest
+import chromium.webkit.WebResourceResponse
+import chromium.webkit.WebView
 import androidx.lifecycle.MutableLiveData
 import androidx.work.WorkInfo
 import io.github.edsuns.adblockclient.ResourceType

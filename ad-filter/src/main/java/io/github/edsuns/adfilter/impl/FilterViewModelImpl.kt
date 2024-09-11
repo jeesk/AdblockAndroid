@@ -19,6 +19,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import timber.log.Timber
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by Edsuns@qq.com on 2021/7/29.
@@ -27,6 +28,8 @@ internal class FilterViewModelImpl constructor(
     context: Context,
     private val filterDataLoader: FilterDataLoader
 ) : FilterViewModel {
+
+    val TAG = "FilterViewModelImpl"
 
     internal val sharedPreferences: FilterSharedPreferences =
         FilterSharedPreferences(context)
@@ -86,7 +89,22 @@ internal class FilterViewModelImpl constructor(
         // clear bad running download state
         filters.value?.values?.forEach {
             if (it.downloadState.isRunning) {
-                val list = workManager.getWorkInfosForUniqueWork(it.id).get()
+                val list =  try{
+                     workManager.getWorkInfosForUniqueWork(it.id).get(20, TimeUnit.MILLISECONDS)
+                }catch (e:Exception){
+                    mutableListOf<WorkInfo>()
+                }
+                if (list == null || list.isEmpty()) {
+                    it.downloadState = DownloadState.FAILED
+                    flushFilter()
+                } else {
+                    if (list[0].state == WorkInfo.State.ENQUEUED
+                        && it.downloadState != DownloadState.ENQUEUED
+                    ) {
+                        it.downloadState = DownloadState.ENQUEUED
+                        flushFilter()
+                    }
+                }
                 if (list == null || list.isEmpty()) {
                     it.downloadState = DownloadState.FAILED
                     flushFilter()
@@ -187,22 +205,21 @@ internal class FilterViewModelImpl constructor(
                 KEY_DOWNLOAD_URL to it.url
             )
             val download =
-                OneTimeWorkRequestBuilder<DownloadWorker>()
+                OneTimeWorkRequest.Builder(DownloadWorker::class.java)
                     .setConstraints(constraints)
                     .addTag(TAG_FILTER_WORK)
                     .setInputData(inputData)
                     .build()
-            val install =
-                OneTimeWorkRequestBuilder<InstallationWorker>()
-                    .addTag(TAG_FILTER_WORK)
-                    .addTag(TAG_INSTALLATION)
-                    .setInputData(
-                        workDataOf(
-                            KEY_RAW_CHECKSUM to it.checksum,
-                            KEY_CHECK_LICENSE to true
-                        )
+            val install = OneTimeWorkRequest.Builder(InstallationWorker::class.java)
+                .addTag(TAG_FILTER_WORK)
+                .addTag(TAG_INSTALLATION)
+                .setInputData(
+                    workDataOf(
+                        KEY_RAW_CHECKSUM to it.checksum,
+                        KEY_CHECK_LICENSE to true
                     )
-                    .build()
+                )
+                .build()
             val continuation = workManager.beginUniqueWork(
                 it.id, ExistingWorkPolicy.KEEP, download
             ).then(install)
